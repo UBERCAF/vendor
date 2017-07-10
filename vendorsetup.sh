@@ -2,5 +2,6 @@ add_lunch_combo uber_angler-user
 add_lunch_combo uber_bullhead-user
 add_lunch_combo uber_hammerhead-user
 add_lunch_combo uber_marlin-user
+add_lunch_combo uber_oneplus2-user
 add_lunch_combo uber_sailfish-user
 add_lunch_combo uber_shamu-user

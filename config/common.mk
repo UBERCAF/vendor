@@ -81,9 +81,26 @@ PRODUCT_PACKAGES += \
     ThemeInterfacer \
     webview
 
+# Telephony packages
+PRODUCT_PACKAGES += \
+    messaging \
+    CellBroadcastReceiver \
+    Stk \
+    telephony-ext
+
+PRODUCT_BOOT_JARS += \
+    telephony-ext
+
+# TCP Connection Management
+PRODUCT_PACKAGES += tcmiface
+PRODUCT_BOOT_JARS += tcmiface
+
 # Include explicitly to work around Facelock issues
 PRODUCT_PACKAGES += \
     libprotobuf-cpp-full
+
+# Recommend using the non debug dexpreopter
+USE_DEX2OAT_DEBUG := false
 
 # Don't compile SystemUITests
 EXCLUDE_SYSTEMUI_TESTS := true

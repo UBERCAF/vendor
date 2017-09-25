@@ -77,7 +77,6 @@ endif
 PRODUCT_PACKAGES += \
     DeskClock \
     LockClock \
-    QuickSearchBox \
     ThemeInterfacer \
     webview
 
@@ -86,7 +85,8 @@ PRODUCT_PACKAGES += \
     messaging \
     CellBroadcastReceiver \
     Stk \
-    telephony-ext
+    telephony-ext \
+    Telecom
 
 PRODUCT_BOOT_JARS += \
     telephony-ext
@@ -94,6 +94,20 @@ PRODUCT_BOOT_JARS += \
 # TCP Connection Management
 PRODUCT_PACKAGES += tcmiface
 PRODUCT_BOOT_JARS += tcmiface
+
+# RCS Service
+PRODUCT_PACKAGES += \
+    rcscommon \
+    rcscommon.xml \
+    rcsservice \
+    rcs_service_aidl \
+    rcs_service_aidl.xml \
+    rcs_service_aidl_static \
+    rcs_service_api \
+    rcs_service_api.xml
+
+# Bluetooth Audio (A2DP)
+PRODUCT_PACKAGES += libbthost_if
 
 # Include explicitly to work around Facelock issues
 PRODUCT_PACKAGES += \
@@ -107,3 +121,5 @@ EXCLUDE_SYSTEMUI_TESTS := true
 
 # Squisher Location
 SQUISHER_SCRIPT := vendor/uber/tools/squisher
+
+-include device/qcom/common/sdclang/sdclang.mk

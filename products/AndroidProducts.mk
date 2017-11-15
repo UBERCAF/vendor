@@ -16,26 +16,10 @@ ifeq (uber_angler,$(TARGET_PRODUCT))
     PRODUCT_MAKEFILES += $(LOCAL_DIR)/uber_angler.mk
 endif
 
-ifeq (uber_bullhead,$(TARGET_PRODUCT))
-    PRODUCT_MAKEFILES += $(LOCAL_DIR)/uber_bullhead.mk
-endif
-
-ifeq (uber_hammerhead,$(TARGET_PRODUCT))
-    PRODUCT_MAKEFILES += $(LOCAL_DIR)/uber_hammerhead.mk
-endif
-
-ifeq (uber_marlin,$(TARGET_PRODUCT))
-    PRODUCT_MAKEFILES += $(LOCAL_DIR)/uber_marlin.mk
+ifeq (uber_mata,$(TARGET_PRODUCT))
+    PRODUCT_MAKEFILES += $(LOCAL_DIR)/uber_mata.mk
 endif
 
 ifeq (uber_oneplus2,$(TARGET_PRODUCT))
     PRODUCT_MAKEFILES += $(LOCAL_DIR)/uber_oneplus2.mk
-endif
-
-ifeq (uber_sailfish,$(TARGET_PRODUCT))
-    PRODUCT_MAKEFILES += $(LOCAL_DIR)/uber_sailfish.mk
-endif
-
-ifeq (uber_shamu,$(TARGET_PRODUCT))
-    PRODUCT_MAKEFILES += $(LOCAL_DIR)/uber_shamu.mk
 endif

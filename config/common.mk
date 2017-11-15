@@ -15,38 +15,21 @@
 # Compile libhwui in performance mode
 HWUI_COMPILE_FOR_PERF := true
 
-# Google property overides
+# Override undesired Google defaults
 PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
+    ro.com.android.dateformat=MM-dd-yyyy \
+    ro.com.android.wifi-watchlist=GoogleGuest \
+    ro.com.google.clientidbase=android-google \
     ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
     ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html \
-    ro.com.android.wifi-watchlist=GoogleGuest \
-    ro.setupwizard.enterprise_mode=1 \
-    ro.com.android.dateformat=MM-dd-yyyy \
-    ro.setupwizard.rotation_locked=true
-
-# UBER property overides
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sys.fw.bg_apps_limit=20 \
-    wifi.supplicant_scan_interval=180 \
-    windowsmgr.max_events_per_sec=150 \
-    debug.performance.tuning=1 \
-    ro.ril.power_collapse=1 \
-    persist.service.lgospd.enable=0 \
-    persist.service.pcsync.enable=0 \
-    ro.facelock.black_timeout=400 \
-    ro.facelock.det_timeout=1500 \
-    ro.facelock.rec_timeout=2500 \
-    ro.facelock.lively_timeout=2500 \
-    ro.facelock.est_max_time=600 \
-    ro.facelock.use_intro_anim=false \
-    ro.setupwizard.network_required=false \
-    ro.setupwizard.gservices_delay=-1 \
-    net.tethering.noprovisioning=true \
-    persist.sys.dun.override=0 \
-    ro.adb.secure=1 \
-    ro.substratum.verified=true \
+    ro.setupwizard.require_network=any \
+    ro.setupwizard.mode=OPTIONAL \
     ro.opa.eligible_device=true
+
+# We got new substratum
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.substratum.verified=true
 
 # Include Substratum unless SUBSTRATUM is set to false
 ifneq ($(SUBSTRATUM),false)
@@ -54,24 +37,21 @@ ifneq ($(SUBSTRATUM),false)
         Substratum
 endif
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.root_access=1
+
 # Include overlays
 PRODUCT_PACKAGE_OVERLAYS += vendor/uber/overlay/common
-PRODUCT_PACKAGE_OVERLAYS += vendor/uber/overlay/$(TARGET_PRODUCT)
 
 # Enable SIP+VoIP
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml
 
-# Proprietary latinime lib needed for swyping
 PRODUCT_COPY_FILES += \
-    vendor/uber/prebuilt/lib/libjni_latinimegoogle.so:system/lib/libjni_latinimegoogle.so
+    vendor/uber/prebuilt/bootanimation/bootanimation_1080.zip:system/media/bootanimation.zip
 
-# Camera Effects
-ifneq ($(filter uber_flounder uber_hammerhead uber_shamu,$(TARGET_PRODUCT)),)
-PRODUCT_COPY_FILES +=  \
-    vendor/uber/prebuilt/vendor/media/LMspeed_508.emd:system/vendor/media/LMspeed_508.emd \
-    vendor/uber/prebuilt/vendor/media/PFFprec_600.emd:system/vendor/media/PFFprec_600.emd
-endif
+# Include APN information
+PRODUCT_COPY_FILES += vendor/uber/prebuilt/etc/apns-conf.xml:system/etc/apns-conf.xml
 
 # Additional Packages
 PRODUCT_PACKAGES += \
@@ -86,10 +66,21 @@ PRODUCT_PACKAGES += \
     CellBroadcastReceiver \
     Stk \
     telephony-ext \
+    ims-ext-common \
     Telecom
 
 PRODUCT_BOOT_JARS += \
     telephony-ext
+
+# Skip boot jars check
+SKIP_BOOT_JARS_CHECK := true
+
+# QMI
+PRODUCT_PACKAGES += \
+    libjson
+
+# Include explicitly to work around GMS issues
+PRODUCT_PACKAGES += libprotobuf-cpp-full
 
 # TCP Connection Management
 PRODUCT_PACKAGES += tcmiface
@@ -109,10 +100,6 @@ PRODUCT_PACKAGES += \
 # Bluetooth Audio (A2DP)
 PRODUCT_PACKAGES += libbthost_if
 
-# Include explicitly to work around Facelock issues
-PRODUCT_PACKAGES += \
-    libprotobuf-cpp-full
-
 # Recommend using the non debug dexpreopter
 USE_DEX2OAT_DEBUG := false
 
@@ -121,5 +108,3 @@ EXCLUDE_SYSTEMUI_TESTS := true
 
 # Squisher Location
 SQUISHER_SCRIPT := vendor/uber/tools/squisher
-
--include device/qcom/common/sdclang/sdclang.mk

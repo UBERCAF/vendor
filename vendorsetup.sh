@@ -1,3 +1,3 @@
-. "$(gettop)/vendor/gzosp/build/envsetup.sh"
+. "$(gettop)/vendor/uber/build/envsetup.sh"
 
-gzosp_device_combos
+uber_device_combos
